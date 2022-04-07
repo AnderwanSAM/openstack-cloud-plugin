@@ -32,6 +32,16 @@
     </developers>
 
     <build>
+        
+      <pluginManagement>
+          <plugins>
+                <plugin>
+                  <groupId>org.jenkins-ci.tools</groupId>
+                  <artifactId>maven-hpi-plugin</artifactId>
+                  <version>3.27</version>
+                </plugin>
+           </plugins>
+        </pluginManagement>
         <plugins>
             <!-- Do not deploy anything except for the plugin -->
             <plugin>
@@ -42,6 +52,12 @@
                     <skip>true</skip>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.jenkins-ci.tools</groupId>
+                <artifactId>maven-hpi-plugin</artifactId>
+                <version>3.27</version>
+            </plugin>
+            
         </plugins>
     </build>
 </project>
