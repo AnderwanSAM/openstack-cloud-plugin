@@ -265,6 +265,8 @@ public class JCloudsCloud extends Cloud implements SlaveOptions.Holder {
         int globalCapacity = globalMax - Math.max(nodeCount, serverCount);
         assert globalCapacity > 0;
 
+        LOGGER.info("Debug-getAvailableTemplateProvider- JCloudsCloud : Number of available templates found :  " + templates.size());
+
         for (JCloudsSlaveTemplate t : templates) {
             if (t.canProvision(label)) {
                 SlaveOptions opts = t.getEffectiveSlaveOptions();
@@ -293,6 +295,7 @@ public class JCloudsCloud extends Cloud implements SlaveOptions.Holder {
     @Override
     public Collection<NodeProvisioner.PlannedNode> provision(Label label, int excessWorkload) {
         Queue<JCloudsSlaveTemplate> templateProvider = getAvailableTemplateProvider(label, excessWorkload);
+        LOGGER.info("Debug- Provision - JCloudsCloud : Number of available templates found :  " + templateProvider.size());
 
         List<PlannedNode> plannedNodeList = new ArrayList<>();
         while (excessWorkload > 0 && !Jenkins.get().isQuietingDown() && !Jenkins.get().isTerminating()) {
