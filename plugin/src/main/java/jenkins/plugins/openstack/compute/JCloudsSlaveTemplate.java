@@ -280,7 +280,7 @@ public class JCloudsSlaveTemplate implements Describable<JCloudsSlaveTemplate>, 
         }
         builder.addMetadataItem(ServerScope.METADATA_KEY, scope.getValue());
 
-        LOGGER.info("Provisioning new openstack server " + serverName + " with options " + opts);
+        LOGGER.info("Provisioning new openstack server -Modification -" + serverName + " with options " + opts);
         // Ensure predictable server name so we can inject it into user data
         builder.name(serverName);
 
