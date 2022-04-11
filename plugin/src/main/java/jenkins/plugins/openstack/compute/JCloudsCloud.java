@@ -252,7 +252,8 @@ public class JCloudsCloud extends Cloud implements SlaveOptions.Holder {
         LOGGER.info("Debug-getAvailableTemplateProvider- JCloudsCloud : Label " + label );
         LOGGER.info("Debug-getAvailableTemplateProvider- JCloudsCloud : excessWorkload " + excessWorkload);
 
-        final Queue<JCloudsSlaveTemplate> queue = new ConcurrentLinkedDeque<>();
+        // final Queue<JCloudsSlaveTemplate> queue = new ConcurrentLinkedDeque<>();
+        Queue<JCloudsSlaveTemplate> queue = new ConcurrentLinkedDeque<>();
 
         List<JCloudsComputer> cloudComputers = JCloudsComputer.getAll().stream().filter(
                 it -> name.equals(it.getId().getCloudName())
