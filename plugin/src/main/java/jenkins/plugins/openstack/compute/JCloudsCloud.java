@@ -139,7 +139,13 @@ public class JCloudsCloud extends Cloud implements SlaveOptions.Holder {
         this.slaveOptions = slaveOptions == null ? SlaveOptions.empty() : slaveOptions.eraseDefaults(DescriptorImpl.DEFAULTS);
 
         this.templates = templates == null ? Collections.emptyList() : Collections.unmodifiableList(templates);
+        // Display templates - Debug
+        LOGGER.info("Debug-Constructor - JCloudsCloud - Given templates ");
+        for (JCloudsSlaveTemplate t : templates){
+            LOGGER.info("Debug - template : " + t.getName());
+        }
 
+        //
         injectReferenceIntoTemplates();
     }
 
