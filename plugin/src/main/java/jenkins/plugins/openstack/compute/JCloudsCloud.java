@@ -249,6 +249,9 @@ public class JCloudsCloud extends Cloud implements SlaveOptions.Holder {
     private @Nonnull Queue<JCloudsSlaveTemplate> getAvailableTemplateProvider(@CheckForNull Label label, int excessWorkload) {
         final int globalMax = getEffectiveSlaveOptions().getInstanceCap();
 
+        LOGGER.info("Debug-getAvailableTemplateProvider- JCloudsCloud : Label " + label );
+        LOGGER.info("Debug-getAvailableTemplateProvider- JCloudsCloud : excessWorkload " + excessWorkload);
+
         final Queue<JCloudsSlaveTemplate> queue = new ConcurrentLinkedDeque<>();
 
         List<JCloudsComputer> cloudComputers = JCloudsComputer.getAll().stream().filter(
@@ -294,7 +297,7 @@ public class JCloudsCloud extends Cloud implements SlaveOptions.Holder {
                 }
             }
         }
-
+        LOGGER.info("Debug-getAvailableTemplateProvider- JCloudsCloud : Size of the Queue  " + queue.size());
         return queue;
     }
 
@@ -302,6 +305,9 @@ public class JCloudsCloud extends Cloud implements SlaveOptions.Holder {
     public Collection<NodeProvisioner.PlannedNode> provision(Label label, int excessWorkload) {
         Queue<JCloudsSlaveTemplate> templateProvider = getAvailableTemplateProvider(label, excessWorkload);
         LOGGER.info("Debug- Provision - JCloudsCloud : Number of available templates found :  " + templateProvider.size());
+
+        LOGGER.info("Debug- provision - JCloudsCloud : excessWorkload " + excessWorkload);
+        LOGGER.info("Debug- provision - JCloudsCloud : label  " + label );
 
         List<PlannedNode> plannedNodeList = new ArrayList<>();
         while (excessWorkload > 0 && !Jenkins.get().isQuietingDown() && !Jenkins.get().isTerminating()) {
