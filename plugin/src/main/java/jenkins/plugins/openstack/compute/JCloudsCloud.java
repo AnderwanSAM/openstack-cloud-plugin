@@ -105,6 +105,7 @@ public class JCloudsCloud extends Cloud implements SlaveOptions.Holder {
         for (Cloud c : Jenkins.get().clouds) {
             if (c instanceof JCloudsCloud) {
                 clouds.add((JCloudsCloud) c);
+                LOGGER.info("Debug - JCloudsCloud - getCloud : " + c.getDisplayName());
             }
         }
 
@@ -275,7 +276,15 @@ public class JCloudsCloud extends Cloud implements SlaveOptions.Holder {
         int globalCapacity = globalMax - Math.max(nodeCount, serverCount);
         assert globalCapacity > 0;
 
+        
+
         LOGGER.info("Debug-getAvailableTemplateProvider- JCloudsCloud : Number of available templates found :  " + templates.size());
+        LOGGER.info("Debug - JCloudsCloud - getAvailableTemplateProvider - JenkinsClouds  : ");
+        for (Cloud c : Jenkins.get().clouds) {
+            if (c instanceof JCloudsCloud) {
+                LOGGER.info("Debug - JCloudsCloud - getCloud : " + c.getDisplayName());
+            } 
+        }
 
         for (JCloudsSlaveTemplate t : templates) {
             if (t.canProvision(label)) {
