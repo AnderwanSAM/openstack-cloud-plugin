@@ -253,8 +253,8 @@ public class JCloudsCloud extends Cloud implements SlaveOptions.Holder {
         LOGGER.info("Debug-getAvailableTemplateProvider- JCloudsCloud : Label " + label );
         LOGGER.info("Debug-getAvailableTemplateProvider- JCloudsCloud : excessWorkload " + excessWorkload);
 
-        // final Queue<JCloudsSlaveTemplate> queue = new ConcurrentLinkedDeque<>();
-        Queue<JCloudsSlaveTemplate> queue = new ConcurrentLinkedDeque<>();
+        final Queue<JCloudsSlaveTemplate> queue = new ConcurrentLinkedDeque<>();
+        // Queue<JCloudsSlaveTemplate> queue = new ConcurrentLinkedDeque<>();
 
         List<JCloudsComputer> cloudComputers = JCloudsComputer.getAll().stream().filter(
                 it -> name.equals(it.getId().getCloudName())
@@ -262,6 +262,7 @@ public class JCloudsCloud extends Cloud implements SlaveOptions.Holder {
 
         int nodeCount = cloudComputers.size();
         if (nodeCount >= globalMax) {
+            LOGGER.info("Debug-getAvailableTemplateProvider- JCloudsCloud : Got to nodeCount >= globalMax ");
             return queue; // more slaves then declared - no need to query openstack
         }
 
@@ -270,6 +271,7 @@ public class JCloudsCloud extends Cloud implements SlaveOptions.Holder {
 
         int serverCount = runningNodes.size();
         if (serverCount >= globalMax) {
+            LOGGER.info("Debug-getAvailableTemplateProvider- JCloudsCloud : Got to nodeCount >= globalMax ");
             return queue; // more servers than needed - no need to proceed any further
         }
 
