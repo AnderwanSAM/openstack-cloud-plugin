@@ -106,6 +106,7 @@ public class JCloudsCloud extends Cloud implements SlaveOptions.Holder {
             if (c instanceof JCloudsCloud) {
                 clouds.add((JCloudsCloud) c);
                 LOGGER.info("Debug - JCloudsCloud - getCloud : " + c.getDisplayName());
+                
             }
         }
 
@@ -253,6 +254,16 @@ public class JCloudsCloud extends Cloud implements SlaveOptions.Holder {
         LOGGER.info("Debug-getAvailableTemplateProvider- JCloudsCloud : Label " + label );
         LOGGER.info("Debug-getAvailableTemplateProvider- JCloudsCloud : excessWorkload " + excessWorkload);
         LOGGER.info("Debug-getAvailableTemplateProvider- JCloudsCloud - 1 : Number of available templates found :  " + templates.size());
+        LOGGER.info("===========================================================================================================================");
+        LOGGER.info("Debug-getAvailableTemplateProvider- JCloudsCloud - Displaying all clouds ");
+        for (Cloud c : Jenkins.get().clouds) {
+            if (c instanceof JCloudsCloud) {
+                LOGGER.info("Debug - JCloudsCloud - getAvailableTemplateProvider : " + c.getDisplayName());
+                             
+            }
+        }
+        LOGGER.info("Debug-getAvailableTemplateProvider- JCloudsCloud - Displaying all clouds - End ");
+        LOGGER.info("===========================================================================================================================");
         final Queue<JCloudsSlaveTemplate> queue = new ConcurrentLinkedDeque<>();
         // Queue<JCloudsSlaveTemplate> queue = new ConcurrentLinkedDeque<>();
 
@@ -279,14 +290,12 @@ public class JCloudsCloud extends Cloud implements SlaveOptions.Holder {
         assert globalCapacity > 0;
 
         
-
+        LOGGER.info("===========================================================================================================================");
         LOGGER.info("Debug-getAvailableTemplateProvider- JCloudsCloud : Number of available templates found :  " + templates.size());
-        LOGGER.info("Debug - JCloudsCloud - getAvailableTemplateProvider - JenkinsClouds  : ");
-        for (Cloud c : Jenkins.get().clouds) {
-            if (c instanceof JCloudsCloud) {
-                LOGGER.info("Debug - JCloudsCloud - getCloud : " + c.getDisplayName());
-            } 
+        for (JCloudsSlaveTemplate t : templates){
+            LOGGER.info("=Name= " + t.getName());
         }
+        LOGGER.info("===========================================================================================================================");
 
         for (JCloudsSlaveTemplate t : templates) {
             if (t.canProvision(label)) {
