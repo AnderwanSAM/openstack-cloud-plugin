@@ -252,7 +252,7 @@ public class JCloudsCloud extends Cloud implements SlaveOptions.Holder {
 
         LOGGER.info("Debug-getAvailableTemplateProvider- JCloudsCloud : Label " + label );
         LOGGER.info("Debug-getAvailableTemplateProvider- JCloudsCloud : excessWorkload " + excessWorkload);
-
+        LOGGER.info("Debug-getAvailableTemplateProvider- JCloudsCloud - 1 : Number of available templates found :  " + templates.size());
         final Queue<JCloudsSlaveTemplate> queue = new ConcurrentLinkedDeque<>();
         // Queue<JCloudsSlaveTemplate> queue = new ConcurrentLinkedDeque<>();
 
