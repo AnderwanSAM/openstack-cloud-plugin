@@ -271,7 +271,7 @@ public class JCloudsCloud extends Cloud implements SlaveOptions.Holder {
 
         int serverCount = runningNodes.size();
         if (serverCount >= globalMax) {
-            LOGGER.info("Debug-getAvailableTemplateProvider- JCloudsCloud : Got to nodeCount >= globalMax ");
+            LOGGER.info("Debug-getAvailableTemplateProvider- JCloudsCloud : Got to serverCount >= globalMax ");
             return queue; // more servers than needed - no need to proceed any further
         }
 
