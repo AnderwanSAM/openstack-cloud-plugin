@@ -280,13 +280,25 @@ public class JCloudsCloud extends Cloud implements SlaveOptions.Holder {
         }
 
 
-        final List<Server> runningNodes = getOpenstack().getRunningNodes();
+        // Check the number of current servers
+        int serverCount =0;
+        List<Server> runningNodes =  new ArrayList<Server>();
+        try {
+            // get the running nodes
+            runningNodes = getOpenstack().getRunningNodes();
 
-        int serverCount = runningNodes.size();
-        if (serverCount >= globalMax) {
-            LOGGER.info("Debug-getAvailableTemplateProvider- JCloudsCloud : Got to serverCount >= globalMax ");
-            return queue; // more servers than needed - no need to proceed any further
+            serverCount = runningNodes.size();
+            if (serverCount >= globalMax) {
+                LOGGER.info("Debug-getAvailableTemplateProvider- JCloudsCloud : Got to serverCount >= globalMax ");
+                return queue; // more servers than needed - no need to proceed any further
+            }
+          }
+          catch(Exception e) {
+            //  Exception, this cloud is not usable 
+            LOGGER.info(e.toString());
+            return queue;
         }
+       
 
         int globalCapacity = globalMax - Math.max(nodeCount, serverCount);
         assert globalCapacity > 0;
