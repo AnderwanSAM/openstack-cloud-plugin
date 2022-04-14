@@ -259,7 +259,9 @@ public class JCloudsCloud extends Cloud implements SlaveOptions.Holder {
         for (Cloud c : Jenkins.get().clouds) {
             if (c instanceof JCloudsCloud) {
                 LOGGER.info("Debug - JCloudsCloud - getAvailableTemplateProvider : " + c.getDisplayName());
-                             
+               for (JCloudsSlaveTemplate t: ((JCloudsCloud)c).templates){
+                LOGGER.info("Debug - JCloudsCloud - getAvailableTemplateProvider - Template here : " + t.getName());
+               }            
             }
         }
         LOGGER.info("Debug-getAvailableTemplateProvider- JCloudsCloud - Displaying all clouds - End ");
