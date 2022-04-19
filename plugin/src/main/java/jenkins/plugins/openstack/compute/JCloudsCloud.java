@@ -255,8 +255,8 @@ public class JCloudsCloud extends Cloud implements SlaveOptions.Holder {
         }
 
          // Check the number of current servers
-         int serverCount =0;
-         List<Server> runningNodes =  new ArrayList<Server>();
+         int serverCount = 0;
+         List<Server> runningNodes = new ArrayList<Server>();
          try {
              // get the running nodes
              runningNodes = getOpenstack().getRunningNodes();
@@ -266,11 +266,10 @@ public class JCloudsCloud extends Cloud implements SlaveOptions.Holder {
                  return queue; // more servers than needed - no need to proceed any further
              }
            }
-           catch(Exception e) {
-             //  Exception, this cloud is not usable 
-             LOGGER.info(e.toString());
-             return queue;
-         }
+           catch (JCloudsCloud.LoginFailure ex) {
+            LOGGER.log(Level.WARNING, "Unable to authenticate: " + ex.getMessage());
+            return queue;
+        } 
 
        
         int globalCapacity = globalMax - Math.max(nodeCount, serverCount);
