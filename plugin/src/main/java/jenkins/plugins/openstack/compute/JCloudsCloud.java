@@ -266,8 +266,9 @@ public class JCloudsCloud extends Cloud implements SlaveOptions.Holder {
                  return queue; // more servers than needed - no need to proceed any further
              }
            }
-           catch (LoginFailure ex) {
-            LOGGER.info( "Unable to authenticate: " + ex.toString());
+           catch (JCloudsCloud.LoginFailure ex) {
+            LOGGER.log(Level.WARNING, "Unable to authenticate: " + ex.getMessage());
+            // LOGGER.info( "Unable to authenticate: " +e.toString());
             return queue;
         } 
 
