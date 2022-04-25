@@ -336,13 +336,7 @@ public class JCloudsCloud extends Cloud implements SlaveOptions.Holder {
             excessWorkload -= numExecutors;
         }
 
-        LOGGER.info("Start================================");
-        for(PlannedNode p : plannedNodeList){
-              LOGGER.info(p.displayName);
-             
-        }
-        LOGGER.info("End========================== ");
-
+        
         return plannedNodeList;
     }
 
