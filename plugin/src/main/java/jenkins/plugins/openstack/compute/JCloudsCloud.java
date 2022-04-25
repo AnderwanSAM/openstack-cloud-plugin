@@ -267,7 +267,7 @@ public class JCloudsCloud extends Cloud implements SlaveOptions.Holder {
              }
            }
            catch (JCloudsCloud.LoginFailure ex) {
-            LOGGER.log(Level.WARNING, "Unable to authenticate: " + ex.getMessage());
+            LOGGER.log(Level.WARNING, "Login failure: " + ex.getMessage());
             return queue;
         } 
 
@@ -309,8 +309,20 @@ public class JCloudsCloud extends Cloud implements SlaveOptions.Holder {
 
             final JCloudsSlaveTemplate template = templateProvider.poll();
             if (template == null) {
-                LOGGER.info("Instance cap exceeded for cloud " + name + " while provisioning for label " + label);
-                break;
+                // two cases 
+                // cloud authentication issue or Instance cap exceeded 
+                try {
+                    // try to authenticate 
+                    getOpenstack();
+                    // if okay, then the problem is related to the instance cap 
+                    LOGGER.info("Instance cap exceeded for cloud " + name + " while provisioning for label " + label);
+                    break;
+                  }
+                  catch (JCloudsCloud.LoginFailure ex) {
+                   // no need to log here because it has already been logged in the getAvailableTemplates method. 
+                   break; 
+               } 
+                
             }
 
             LOGGER.fine("Provisioning slave for " + label + " from template " + template.getName());
@@ -330,7 +342,7 @@ public class JCloudsCloud extends Cloud implements SlaveOptions.Holder {
              
         }
         LOGGER.info("End========================== ");
-        
+
         return plannedNodeList;
     }
 
