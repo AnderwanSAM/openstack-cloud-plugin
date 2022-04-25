@@ -96,6 +96,7 @@ public class InstanceCapacityTest {
         lr.record(JCloudsCloud.class, Level.INFO);
 
         assertEquals(0, cloud.provision(Label.get("restricted"), 1).size());
+        List<String> restrictedMessages = lr.getMessages();
         assertThat(restrictedMessages, hasItem("Instance cap exceeded for cloud openstack while provisioning for label restricted"));
         assertThat(restrictedMessages, hasSize(1));
 
