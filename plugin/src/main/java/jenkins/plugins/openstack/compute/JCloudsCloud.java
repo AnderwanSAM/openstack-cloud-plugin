@@ -267,7 +267,7 @@ public class JCloudsCloud extends Cloud implements SlaveOptions.Holder {
              }
            }
            catch (JCloudsCloud.LoginFailure ex) {
-            // LOGGER.log(Level.WARNING, "Login failure: " + ex.getMessage());
+            LOGGER.log(Level.WARNING, "Login failure: " + ex.getMessage());
             return queue;
         } 
 
