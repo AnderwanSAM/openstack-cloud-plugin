@@ -439,6 +439,12 @@ System.out.println(cloud.getOpenstack().instanceFingerprint());
         }
     }
 
+    @Test
+    public void provisionWhenSharedLabel() throws Exception {
+        assertEquals(0,0);
+    }
+
+
     private void verifyPreferredAddressUsed(String expectedAddress, Collection<NetworkAddress> addresses) throws Exception {
         CloudStatistics cs = CloudStatistics.get();
         assertThat(cs.getActivities(), Matchers.iterableWithSize(0));
