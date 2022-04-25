@@ -268,7 +268,6 @@ public class JCloudsCloud extends Cloud implements SlaveOptions.Holder {
            }
            catch (JCloudsCloud.LoginFailure ex) {
             LOGGER.log(Level.WARNING, "Unable to authenticate: " + ex.getMessage());
-            // LOGGER.info( "Unable to authenticate: " +e.toString());
             return queue;
         } 
 
@@ -324,6 +323,14 @@ public class JCloudsCloud extends Cloud implements SlaveOptions.Holder {
 
             excessWorkload -= numExecutors;
         }
+
+        LOGGER.fine("Start================================");
+        for(PlannedNode p : plannedNodeList){
+              LOGGER.fine(p.displayName);
+             
+        }
+        LOGGER.fine("End========================== ");
+
         return plannedNodeList;
     }
 
