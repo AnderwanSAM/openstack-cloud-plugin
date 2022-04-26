@@ -442,6 +442,38 @@ System.out.println(cloud.getOpenstack().instanceFingerprint());
     @Test
     public void provisionWhenSharedLabel() throws Exception {
         assertEquals(0,0);
+        // Test 1 - premiere assertion 
+        /* 	○ Test1: Everything fine 
+			§ Two clouds configured and up
+			§ Two jobs
+			§ Should work fine 
+         */
+       
+        SlaveOptions init = j.defaultSlaveOptions();
+        JCloudsSlaveTemplate template1 = j.dummySlaveTemplate(init.getBuilder().instanceCap(1).build(), "generic");
+        JCloudsSlaveTemplate template2 = j.dummySlaveTemplate(init.getBuilder().instanceCap(1).build(), "generic");
+        JCloudsCloud cloud = j.dummyCloud(init.getBuilder().instanceCap(2).build(), template1);
+        JCloudsCloud cloud2 = j.dummyCloud(init.getBuilder().instanceCap(2).build(), template2);
+        
+        Label generic = Label.get("generic");
+        assertEquals(1, cloud.provision(generic, 2).size());
+        assertEquals(1, cloud2.provision(generic, 2).size());
+        
+          // Test 2 - second assertion 
+        /* ○ Test2: First Cloud down 
+			§ First Cloud down - simulate outage by providing invalid credentials 
+			§ Two jobs
+			§ Should work fine - It should build both jobs using the remaining cloud
+         */
+
+         // Test 3 - third assertion 
+        /* ○ Test 3: second Cloud down 
+			§ First Cloud down - simulate outage by providing invalid credentials 
+			§ Two jobs
+			§ Should work fine - It should build both jobs using the remaining cloud
+         */
+
+         
     }
 
 
