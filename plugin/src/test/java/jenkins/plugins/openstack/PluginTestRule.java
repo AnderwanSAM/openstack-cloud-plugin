@@ -310,6 +310,12 @@ public final class PluginTestRule extends JenkinsRule {
         return cloud;
     }
 
+    public JCloudsCloud unavailableDummyCloud(SlaveOptions opts, JCloudsSlaveTemplate... templates) {
+        JCloudsCloud cloud = new MockJCloudsCloud(opts,false,templates);
+        jenkins.clouds.add(cloud);
+        return cloud;
+    }
+
     public JCloudsCloud configureSlaveLaunchingWithFloatingIP(String labels) {
         return configureSlaveLaunchingWithFloatingIP(dummyCloud(dummySlaveTemplate(labels)));
     }
@@ -640,6 +646,10 @@ public final class PluginTestRule extends JenkinsRule {
 
         public MockJCloudsCloud(SlaveOptions opts, JCloudsSlaveTemplate... templates) {
             super("openstack", "endPointUrl", false,"zone", opts, Arrays.asList(templates), "credentialsId");
+        }
+
+        public MockJCloudsCloud(SlaveOptions opts,boolean available, JCloudsSlaveTemplate... templates) {
+            super("openstack", "endPointUrl", false,"zone", opts, Arrays.asList(templates), null);
         }
 
         @Override

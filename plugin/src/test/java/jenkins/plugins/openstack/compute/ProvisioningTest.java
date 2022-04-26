@@ -442,7 +442,7 @@ System.out.println(cloud.getOpenstack().instanceFingerprint());
 
     @Test
     public void provisionWhenSharedLabel() throws Exception {
-        assertEquals(0,0);
+        
         // Test 1 - premiere assertion 
         /* 	○ Test1: Everything fine 
 			§ Two clouds configured and up
@@ -457,9 +457,7 @@ System.out.println(cloud.getOpenstack().instanceFingerprint());
         JCloudsCloud cloud2 = j.dummyCloud(init.getBuilder().instanceCap(2).build(), template2);
         
         Label generic = Label.get("generic");
-        assertEquals(1, cloud.provision(generic, 2).size());
-        assertEquals(1, cloud2.provision(generic, 2).size());
-        
+            
         // Simulate the provisioning process used in NodeProvisioner (https://github.com/jenkinsci/jenkins/blob/master/core/src/main/java/hudson/slaves/NodeProvisioner.java#L628)
         List<JCloudsCloud> clouds = new ArrayList<JCloudsCloud>();
         clouds.add(cloud); clouds.add(cloud2); 
@@ -474,7 +472,7 @@ System.out.println(cloud.getOpenstack().instanceFingerprint());
                 }
             }  
         }
-             
+        assertEquals(0,jobs);
 
           // Test 2 - second assertion 
         /* ○ Test2: First Cloud down 
@@ -482,15 +480,52 @@ System.out.println(cloud.getOpenstack().instanceFingerprint());
 			§ Two jobs
 			§ Should work fine - It should build both jobs using the remaining cloud
          */
-
+       
+        JCloudsCloud cloud3 = j.unavailableDummyCloud(init.getBuilder().instanceCap(2).build(), template1);
+        JCloudsCloud cloud4 = j.dummyCloud(init.getBuilder().instanceCap(2).build(), template2);
+        
+        // Simulate the provisioning process used in NodeProvisioner (https://github.com/jenkinsci/jenkins/blob/master/core/src/main/java/hudson/slaves/NodeProvisioner.java#L628)
+        clouds.clear();
+        clouds.add(cloud3); clouds.add(cloud4); 
+        int jobs_2 = 2; 
+        // Until there are no more jobs to build
+        while(jobs_2>0){
+            // try provisioning from the clouds 
+            for (JCloudsCloud c : clouds){
+                if (c.canProvision(generic)){
+                    // update the number of remaining jobs to build
+                    jobs -= c.provision(generic,jobs).size();
+                }
+            }  
+        }
+             
+        assertEquals(0,jobs_2);
          // Test 3 - third assertion 
         /* ○ Test 3: second Cloud down 
 			§ First Cloud down - simulate outage by providing invalid credentials 
 			§ Two jobs
 			§ Should work fine - It should build both jobs using the remaining cloud
          */
-
-         
+        
+        JCloudsCloud cloud5 = j.dummyCloud(init.getBuilder().instanceCap(2).build(), template1);
+        JCloudsCloud cloud6 = j.unavailableDummyCloud(init.getBuilder().instanceCap(2).build(), template2);
+        
+        // Simulate the provisioning process used in NodeProvisioner (https://github.com/jenkinsci/jenkins/blob/master/core/src/main/java/hudson/slaves/NodeProvisioner.java#L628)
+        clouds.clear();
+        clouds.add(cloud5); clouds.add(cloud6); 
+        int jobs_3 = 2; 
+        // Until there are no more jobs to build
+        while(jobs_3>0){
+            // try provisioning from the clouds 
+            for (JCloudsCloud c : clouds){
+                if (c.canProvision(generic)){
+                    // update the number of remaining jobs to build
+                    jobs -= c.provision(generic,jobs).size();
+                }
+            }  
+        }
+             
+        assertEquals(0,jobs_3);  
     }
 
 
