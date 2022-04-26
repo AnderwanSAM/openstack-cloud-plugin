@@ -468,7 +468,8 @@ System.out.println(cloud.getOpenstack().instanceFingerprint());
             for (JCloudsCloud c : clouds){
                 if (c.canProvision(generic)){
                     // update the number of remaining jobs to build
-                    jobs -= c.provision(generic,jobs).size();
+                    Collection<NodeProvisioner.PlannedNode> plannedNodeList =  c.provision(generic,jobs);
+                    jobs -= plannedNodeList.size(); 
                 }
             }  
         }
@@ -495,7 +496,10 @@ System.out.println(cloud.getOpenstack().instanceFingerprint());
             for (JCloudsCloud c : clouds){
                 if (c.canProvision(generic)){
                     // update the number of remaining jobs to build
-                    jobs -= c.provision(generic,jobs).size();
+                    // jobs -= c.provision(generic,jobs).size();
+
+                    Collection<NodeProvisioner.PlannedNode> plannedNodeList =  c.provision(generic,jobs);
+                    jobs -= plannedNodeList.size(); 
                 }
             }  
         }
