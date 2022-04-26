@@ -32,6 +32,7 @@ import org.openstack4j.model.compute.builder.ServerCreateBuilder;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -445,7 +446,7 @@ System.out.println(cloud.getOpenstack().instanceFingerprint());
         // Test 1 - premiere assertion 
         /* 	○ Test1: Everything fine 
 			§ Two clouds configured and up
-			§ Two jobs
+			§ Two jobs - excessWorkload = 2 
 			§ Should work fine 
          */
        
@@ -459,6 +460,22 @@ System.out.println(cloud.getOpenstack().instanceFingerprint());
         assertEquals(1, cloud.provision(generic, 2).size());
         assertEquals(1, cloud2.provision(generic, 2).size());
         
+        // Simulate the provisioning process used in NodeProvisioner (https://github.com/jenkinsci/jenkins/blob/master/core/src/main/java/hudson/slaves/NodeProvisioner.java#L628)
+        List<JCloudsCloud> clouds = new ArrayList<JCloudsCloud>();
+        clouds.add(cloud); clouds.add(cloud2); 
+        int jobs = 2; 
+        // Until there are no more jobs to build
+        while(jobs>0){
+            // try provisioning from the clouds 
+            for (JCloudsCloud c : clouds){
+                if (c.canProvision(generic)){
+                    // update the number of remaining jobs to build
+                    jobs -= c.provision(generic,jobs).size();
+                }
+            }  
+        }
+             
+
           // Test 2 - second assertion 
         /* ○ Test2: First Cloud down 
 			§ First Cloud down - simulate outage by providing invalid credentials 
