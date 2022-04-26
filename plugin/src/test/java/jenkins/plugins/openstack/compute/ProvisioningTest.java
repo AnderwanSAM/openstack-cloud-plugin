@@ -487,8 +487,8 @@ System.out.println(cloud.getOpenstack().instanceFingerprint());
         
         // // Simulate the provisioning process used in NodeProvisioner (https://github.com/jenkinsci/jenkins/blob/master/core/src/main/java/hudson/slaves/NodeProvisioner.java#L628)
        
-        // clouds.add(cloud3); clouds.add(cloud4); 
-        // int jobs_2 = 2; 
+        clouds.add(cloud3); clouds.add(cloud4); 
+        int jobs_2 = 2; 
         // // Until there are no more jobs to build
         // while(jobs_2>0){
         //     // try provisioning from the clouds 
