@@ -490,15 +490,15 @@ System.out.println(cloud.getOpenstack().instanceFingerprint());
         clouds.add(cloud3); clouds.add(cloud4); 
         int jobs_2 = 2; 
         // // Until there are no more jobs to build
-        // while(jobs_2>0){
-        //     // try provisioning from the clouds 
-        //     for (JCloudsCloud c : clouds){
-        //         if (c.canProvision(generic)){
-        //             // update the number of remaining jobs to build
-        //             jobs -= c.provision(generic,jobs).size();
-        //         }
-        //     }  
-        // }
+        while(jobs_2>0){
+            // try provisioning from the clouds 
+            for (JCloudsCloud c : clouds){
+                if (c.canProvision(generic)){
+                    // update the number of remaining jobs to build
+                    jobs -= c.provision(generic,jobs).size();
+                }
+            }  
+        }
              
         // assertEquals(0,jobs_2);
          // Test 3 - third assertion 
