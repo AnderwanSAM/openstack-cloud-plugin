@@ -480,53 +480,53 @@ System.out.println(cloud.getOpenstack().instanceFingerprint());
 			§ Two jobs
 			§ Should work fine - It should build both jobs using the remaining cloud
          */
-        clouds.clear();
-        cloud = cloud2 = null;
-        JCloudsCloud cloud3 = j.unavailableDummyCloud(init.getBuilder().instanceCap(2).build(), template1);
-        JCloudsCloud cloud4 = j.dummyCloud(init.getBuilder().instanceCap(2).build(), template2);
+        // clouds.clear();
+        // cloud = cloud2 = null;
+        // JCloudsCloud cloud3 = j.unavailableDummyCloud(init.getBuilder().instanceCap(2).build(), template1);
+        // JCloudsCloud cloud4 = j.dummyCloud(init.getBuilder().instanceCap(2).build(), template2);
         
-        // Simulate the provisioning process used in NodeProvisioner (https://github.com/jenkinsci/jenkins/blob/master/core/src/main/java/hudson/slaves/NodeProvisioner.java#L628)
+        // // Simulate the provisioning process used in NodeProvisioner (https://github.com/jenkinsci/jenkins/blob/master/core/src/main/java/hudson/slaves/NodeProvisioner.java#L628)
        
-        clouds.add(cloud3); clouds.add(cloud4); 
-        int jobs_2 = 2; 
-        // Until there are no more jobs to build
-        while(jobs_2>0){
-            // try provisioning from the clouds 
-            for (JCloudsCloud c : clouds){
-                if (c.canProvision(generic)){
-                    // update the number of remaining jobs to build
-                    jobs -= c.provision(generic,jobs).size();
-                }
-            }  
-        }
+        // clouds.add(cloud3); clouds.add(cloud4); 
+        // int jobs_2 = 2; 
+        // // Until there are no more jobs to build
+        // while(jobs_2>0){
+        //     // try provisioning from the clouds 
+        //     for (JCloudsCloud c : clouds){
+        //         if (c.canProvision(generic)){
+        //             // update the number of remaining jobs to build
+        //             jobs -= c.provision(generic,jobs).size();
+        //         }
+        //     }  
+        // }
              
-        assertEquals(0,jobs_2);
+        // assertEquals(0,jobs_2);
          // Test 3 - third assertion 
         /* ○ Test 3: second Cloud down 
 			§ First Cloud down - simulate outage by providing invalid credentials 
 			§ Two jobs
 			§ Should work fine - It should build both jobs using the remaining cloud
          */
-        clouds.clear();
-        cloud3 = cloud4 = null;
-        JCloudsCloud cloud5 = j.dummyCloud(init.getBuilder().instanceCap(2).build(), template1);
-        JCloudsCloud cloud6 = j.unavailableDummyCloud(init.getBuilder().instanceCap(2).build(), template2);
+        // clouds.clear();
+        // cloud3 = cloud4 = null;
+        // JCloudsCloud cloud5 = j.dummyCloud(init.getBuilder().instanceCap(2).build(), template1);
+        // JCloudsCloud cloud6 = j.unavailableDummyCloud(init.getBuilder().instanceCap(2).build(), template2);
         
-        // Simulate the provisioning process used in NodeProvisioner (https://github.com/jenkinsci/jenkins/blob/master/core/src/main/java/hudson/slaves/NodeProvisioner.java#L628)
-        clouds.add(cloud5); clouds.add(cloud6); 
-        int jobs_3 = 2; 
-        // Until there are no more jobs to build
-        while(jobs_3>0){
-            // try provisioning from the clouds 
-            for (JCloudsCloud c : clouds){
-                if (c.canProvision(generic)){
-                    // update the number of remaining jobs to build
-                    jobs -= c.provision(generic,jobs).size();
-                }
-            }  
-        }
+        // // Simulate the provisioning process used in NodeProvisioner (https://github.com/jenkinsci/jenkins/blob/master/core/src/main/java/hudson/slaves/NodeProvisioner.java#L628)
+        // clouds.add(cloud5); clouds.add(cloud6); 
+        // int jobs_3 = 2; 
+        // // Until there are no more jobs to build
+        // while(jobs_3>0){
+        //     // try provisioning from the clouds 
+        //     for (JCloudsCloud c : clouds){
+        //         if (c.canProvision(generic)){
+        //             // update the number of remaining jobs to build
+        //             jobs -= c.provision(generic,jobs).size();
+        //         }
+        //     }  
+        // }
              
-        assertEquals(0,jobs_3);  
+        // assertEquals(0,jobs_3);  
     }
 
 
