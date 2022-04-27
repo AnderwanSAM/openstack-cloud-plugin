@@ -490,8 +490,9 @@ System.out.println(cloud.getOpenstack().instanceFingerprint());
        
         clouds.add(cloud3); clouds.add(cloud4); 
         int jobs_2 = 2; 
+        int count = 5; 
         // // Until there are no more jobs to build
-        while(jobs_2>0){
+        while(count > 0 && jobs_2>0){
             // try provisioning from the clouds 
             for (JCloudsCloud c : clouds){
                 if (c.canProvision(generic)){
@@ -502,6 +503,7 @@ System.out.println(cloud.getOpenstack().instanceFingerprint());
                     jobs -= plannedNodeList.size(); 
                 }
             }  
+            count-=1; 
         }
              
         // assertEquals(0,jobs_2);
