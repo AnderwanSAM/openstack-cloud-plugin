@@ -504,7 +504,7 @@ System.out.println(cloud.getOpenstack().instanceFingerprint());
 
                     // provision then free - termination
                     Server server = template2.getRunningNodes().get(0);
-                    cloud.getOpenstack().destroyServer(server);
+                    c.getOpenstack().destroyServer(server);
                     j.jenkins.removeNode(j.jenkins.getNode(server.getName()));
                 }
             }  
