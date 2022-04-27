@@ -490,25 +490,15 @@ System.out.println(cloud.getOpenstack().instanceFingerprint());
        
         clouds.add(cloud3); clouds.add(cloud4); 
         int jobs_2 = 2; 
-        // int count = 5; 
         // // Until there are no more jobs to build
         while(jobs_2>0){
             // try provisioning from the clouds 
             for (JCloudsCloud c : clouds){
                 if (c.canProvision(generic)){
                     // update the number of remaining jobs to build
-                    // jobs -= c.provision(generic,jobs).size();
-
-                    Collection<NodeProvisioner.PlannedNode> plannedNodeList =  c.provision(generic,jobs);
-                    jobs_2 -= plannedNodeList.size(); 
-
-                    // provision then free - termination
-                    // Server server = template2.getRunningNodes().get(0);
-                    // c.getOpenstack().destroyServer(server);
-                    // j.jenkins.removeNode(j.jenkins.getNode(server.getName()));
+                    jobs_2 -=  c.provision(generic,jobs).size();
                 }
             }  
-           // count-=1; 
         }
              
         assertEquals(0,jobs_2);
@@ -518,26 +508,26 @@ System.out.println(cloud.getOpenstack().instanceFingerprint());
 			§ Two jobs
 			§ Should work fine - It should build both jobs using the remaining cloud
          */
-        // clouds.clear();
-        // cloud3 = cloud4 = null;
-        // JCloudsCloud cloud5 = j.dummyCloud(init.getBuilder().instanceCap(2).build(), template1);
-        // JCloudsCloud cloud6 = j.unavailableDummyCloud(init.getBuilder().instanceCap(2).build(), template2);
+        clouds.clear();
+        cloud3 = cloud4 = null;
+        JCloudsCloud cloud5 = j.dummyCloud(init.getBuilder().instanceCap(2).build(), template1);
+        JCloudsCloud cloud6 = j.unavailableDummyCloud(init.getBuilder().instanceCap(2).build(), template2);
         
         // // Simulate the provisioning process used in NodeProvisioner (https://github.com/jenkinsci/jenkins/blob/master/core/src/main/java/hudson/slaves/NodeProvisioner.java#L628)
-        // clouds.add(cloud5); clouds.add(cloud6); 
-        // int jobs_3 = 2; 
+        clouds.add(cloud5); clouds.add(cloud6); 
+         int jobs_3 = 2; 
         // // Until there are no more jobs to build
-        // while(jobs_3>0){
-        //     // try provisioning from the clouds 
-        //     for (JCloudsCloud c : clouds){
-        //         if (c.canProvision(generic)){
-        //             // update the number of remaining jobs to build
-        //             jobs -= c.provision(generic,jobs).size();
-        //         }
-        //     }  
-        // }
+        while(jobs_3>0){
+            // try provisioning from the clouds 
+            for (JCloudsCloud c : clouds){
+                if (c.canProvision(generic)){
+                    // update the number of remaining jobs to build
+                    jobs -= c.provision(generic,jobs).size();
+                }
+            }  
+        }
              
-        // assertEquals(0,jobs_3);  
+        assertEquals(0,jobs_3);  
     }
 
 
