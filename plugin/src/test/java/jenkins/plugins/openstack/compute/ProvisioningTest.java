@@ -503,9 +503,12 @@ System.out.println(cloud.getOpenstack().instanceFingerprint());
                     jobs -= plannedNodeList.size(); 
 
                     // provision then free - termination
+                    Server server = template2.getRunningNodes().get(0);
+                    cloud.getOpenstack().destroyServer(server);
+                    j.jenkins.removeNode(j.jenkins.getNode(server.getName()));
                 }
             }  
-            count-=1; 
+           // count-=1; 
         }
              
         // assertEquals(0,jobs_2);
