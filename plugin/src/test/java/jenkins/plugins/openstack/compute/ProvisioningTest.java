@@ -490,9 +490,9 @@ System.out.println(cloud.getOpenstack().instanceFingerprint());
        
         clouds.add(cloud3); clouds.add(cloud4); 
         int jobs_2 = 2; 
-        int count = 5; 
+        // int count = 5; 
         // // Until there are no more jobs to build
-        while(count > 0 && jobs_2>0){
+        while(jobs_2>0){
             // try provisioning from the clouds 
             for (JCloudsCloud c : clouds){
                 if (c.canProvision(generic)){
@@ -500,18 +500,18 @@ System.out.println(cloud.getOpenstack().instanceFingerprint());
                     // jobs -= c.provision(generic,jobs).size();
 
                     Collection<NodeProvisioner.PlannedNode> plannedNodeList =  c.provision(generic,jobs);
-                    jobs -= plannedNodeList.size(); 
+                    jobs_2 -= plannedNodeList.size(); 
 
                     // provision then free - termination
-                    Server server = template2.getRunningNodes().get(0);
-                    c.getOpenstack().destroyServer(server);
-                    j.jenkins.removeNode(j.jenkins.getNode(server.getName()));
+                    // Server server = template2.getRunningNodes().get(0);
+                    // c.getOpenstack().destroyServer(server);
+                    // j.jenkins.removeNode(j.jenkins.getNode(server.getName()));
                 }
             }  
            // count-=1; 
         }
              
-        // assertEquals(0,jobs_2);
+        assertEquals(0,jobs_2);
          // Test 3 - third assertion 
         /* ○ Test 3: second Cloud down 
 			§ First Cloud down - simulate outage by providing invalid credentials 
