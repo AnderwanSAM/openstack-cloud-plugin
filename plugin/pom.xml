@@ -255,7 +255,7 @@
                     <artifactId>maven-surefire-plugin</artifactId>
                     <configuration>
                         <reuseForks>false</reuseForks>
-                        <argLine>-Xmx1024m -XX:MaxPermSize=256m</argLine>
+                        <!-- <argLine>-Xmx1024m -XX:MaxPermSize=256m</argLine> -->
                     </configuration>
                 </plugin>
             </plugins>
