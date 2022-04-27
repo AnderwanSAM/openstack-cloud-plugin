@@ -501,6 +501,8 @@ System.out.println(cloud.getOpenstack().instanceFingerprint());
 
                     Collection<NodeProvisioner.PlannedNode> plannedNodeList =  c.provision(generic,jobs);
                     jobs -= plannedNodeList.size(); 
+
+                    // provision then free - termination
                 }
             }  
             count-=1; 
