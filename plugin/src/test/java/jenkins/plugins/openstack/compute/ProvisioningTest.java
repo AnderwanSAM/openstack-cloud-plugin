@@ -486,6 +486,15 @@ System.out.println(cloud.getOpenstack().instanceFingerprint());
         JCloudsCloud cloud3 = j.unavailableDummyCloud(init.getBuilder().instanceCap(1).build(), template1);
         JCloudsCloud cloud4 = j.dummyCloud(init.getBuilder().instanceCap(2).build(), template2);
         
+        // verify that the unavailable dummy clouds are indeed unaivalable 
+        try {
+            cloud3.getOpenstack(); 
+            assertEquals(5,1);
+        } catch (Exception e)
+        {
+            assertEquals(3,2);
+        }
+
         // // Simulate the provisioning process used in NodeProvisioner (https://github.com/jenkinsci/jenkins/blob/master/core/src/main/java/hudson/slaves/NodeProvisioner.java#L628)
        
         clouds.add(cloud3); clouds.add(cloud4); 
