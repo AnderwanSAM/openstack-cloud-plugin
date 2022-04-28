@@ -461,19 +461,19 @@ System.out.println(cloud.getOpenstack().instanceFingerprint());
         // Simulate the provisioning process used in NodeProvisioner (https://github.com/jenkinsci/jenkins/blob/master/core/src/main/java/hudson/slaves/NodeProvisioner.java#L628)
         List<JCloudsCloud> clouds = new ArrayList<JCloudsCloud>();
         clouds.add(cloud); clouds.add(cloud2); 
-        int jobs = 2; 
+        int jobsCount = 2; 
         // Until there are no more jobs to build
-        while(jobs>0){
+        while(jobsCount>0){
             // try provisioning from the clouds 
             for (JCloudsCloud c : clouds){
                 if (c.canProvision(generic)){
                     // update the number of remaining jobs to build
-                    Collection<NodeProvisioner.PlannedNode> plannedNodeList =  c.provision(generic,jobs);
-                    jobs -= plannedNodeList.size(); 
+                    Collection<NodeProvisioner.PlannedNode> plannedNodeList =  c.provision(generic,jobsCount);
+                    jobsCount -= plannedNodeList.size(); 
                 }
             }  
         }
-        assertEquals(0,jobs);
+        assertEquals(0,jobsCount);
 
           // Test 2 - second assertion 
         /* ○ Test2: First Cloud down 
@@ -489,19 +489,19 @@ System.out.println(cloud.getOpenstack().instanceFingerprint());
         // // Simulate the provisioning process used in NodeProvisioner (https://github.com/jenkinsci/jenkins/blob/master/core/src/main/java/hudson/slaves/NodeProvisioner.java#L628)
        
         clouds.add(cloud3); clouds.add(cloud4); 
-        int jobs_2 = 2; 
+        int jobsCount2 = 2; 
         // // Until there are no more jobs to build
-        while(jobs_2>0){
+        while(jobsCount2>0){
             // try provisioning from the clouds 
             for (JCloudsCloud c : clouds){
                 if (c.canProvision(generic)){
                     // update the number of remaining jobs to build
-                    jobs_2 -=  c.provision(generic,jobs).size();
+                    jobsCount2 -=  c.provision(generic,jobsCount2).size();
                 }
             }  
         }
              
-        assertEquals(0,jobs_2);
+        assertEquals(0,jobsCount2);
          // Test 3 - third assertion 
         /* ○ Test 3: second Cloud down 
 			§ First Cloud down - simulate outage by providing invalid credentials 
@@ -515,19 +515,19 @@ System.out.println(cloud.getOpenstack().instanceFingerprint());
         
         // // Simulate the provisioning process used in NodeProvisioner (https://github.com/jenkinsci/jenkins/blob/master/core/src/main/java/hudson/slaves/NodeProvisioner.java#L628)
         clouds.add(cloud5); clouds.add(cloud6); 
-         int jobs_3 = 2; 
+         int jobsCount3 = 2; 
         // // Until there are no more jobs to build
-        while(jobs_3>0){
+        while(jobsCount3>0){
             // try provisioning from the clouds 
             for (JCloudsCloud c : clouds){
                 if (c.canProvision(generic)){
                     // update the number of remaining jobs to build
-                    jobs -= c.provision(generic,jobs).size();
+                    jobsCount3 -= c.provision(generic,jobsCount3).size();
                 }
             }  
         }
              
-        assertEquals(0,jobs_3);  
+        assertEquals(0,jobsCount3);  
     }
 
 
