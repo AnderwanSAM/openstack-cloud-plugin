@@ -483,7 +483,7 @@ System.out.println(cloud.getOpenstack().instanceFingerprint());
          */
         clouds.clear();
         cloud = cloud2 = null;
-        JCloudsCloud cloud3 = j.unavailableDummyCloud(init.getBuilder().instanceCap(2).build(), template1);
+        JCloudsCloud cloud3 = j.unavailableDummyCloud(init.getBuilder().instanceCap(1).build(), template1);
         JCloudsCloud cloud4 = j.dummyCloud(init.getBuilder().instanceCap(2).build(), template2);
         
         // // Simulate the provisioning process used in NodeProvisioner (https://github.com/jenkinsci/jenkins/blob/master/core/src/main/java/hudson/slaves/NodeProvisioner.java#L628)
@@ -511,7 +511,7 @@ System.out.println(cloud.getOpenstack().instanceFingerprint());
         clouds.clear();
         cloud3 = cloud4 = null;
         JCloudsCloud cloud5 = j.dummyCloud(init.getBuilder().instanceCap(2).build(), template1);
-        JCloudsCloud cloud6 = j.unavailableDummyCloud(init.getBuilder().instanceCap(2).build(), template2);
+        JCloudsCloud cloud6 = j.unavailableDummyCloud(init.getBuilder().instanceCap(1).build(), template2);
         
         // // Simulate the provisioning process used in NodeProvisioner (https://github.com/jenkinsci/jenkins/blob/master/core/src/main/java/hudson/slaves/NodeProvisioner.java#L628)
         clouds.add(cloud5); clouds.add(cloud6); 
