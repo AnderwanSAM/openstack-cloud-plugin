@@ -715,7 +715,8 @@ public class JCloudsCloud extends Cloud implements SlaveOptions.Holder {
         }
     }
 
-    /*package*/ static final class LoginFailure extends RuntimeException {
+    /*package*/ 
+    public static final class LoginFailure extends RuntimeException {
 
         private static final long serialVersionUID = 4085466675398031930L;
 
@@ -727,7 +728,7 @@ public class JCloudsCloud extends Cloud implements SlaveOptions.Holder {
             super("Failure to authenticate for cloud " + name + ": " + ex.toString());
         }
 
-        private LoginFailure(String msg) {
+        public LoginFailure(String msg) {
             super(msg);
         }
     }
