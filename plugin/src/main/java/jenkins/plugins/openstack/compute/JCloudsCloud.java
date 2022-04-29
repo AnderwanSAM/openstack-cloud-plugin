@@ -265,8 +265,7 @@ public class JCloudsCloud extends Cloud implements SlaveOptions.Holder {
              if (serverCount >= globalMax) {
                  return queue; // more servers than needed - no need to proceed any further
              }
-           }
-           catch (JCloudsCloud.LoginFailure ex) {
+           }  catch (JCloudsCloud.LoginFailure ex) {
             LOGGER.log(Level.WARNING, "Login failure: " + ex.getMessage());
             return queue;
         } 
@@ -317,8 +316,7 @@ public class JCloudsCloud extends Cloud implements SlaveOptions.Holder {
                     // if okay, then the problem is related to the instance cap 
                     LOGGER.info("Instance cap exceeded for cloud " + name + " while provisioning for label " + label);
                     break;
-                  }
-                  catch (JCloudsCloud.LoginFailure ex) {
+                  } catch (JCloudsCloud.LoginFailure ex) {
                    // no need to log here because it has already been logged in the getAvailableTemplates method. 
                    break; 
                } 
