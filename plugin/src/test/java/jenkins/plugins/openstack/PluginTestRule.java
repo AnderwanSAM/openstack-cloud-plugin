@@ -658,7 +658,7 @@ public final class PluginTestRule extends JenkinsRule {
             if ( getCredentialsId() != null){
                 return os ;
             } else {
-                throw new LoginFailure(name);
+                throw new LoginFailure("Login failure");
             }
           
         }
