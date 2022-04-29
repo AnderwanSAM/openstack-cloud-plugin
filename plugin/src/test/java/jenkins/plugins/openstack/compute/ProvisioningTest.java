@@ -487,20 +487,21 @@ System.out.println(cloud.getOpenstack().instanceFingerprint());
         JCloudsCloud cloud4 = j.dummyCloud(init.getBuilder().instanceCap(2).build(), template2);
         
         // verify that the unavailable dummy clouds are indeed unaivalable 
-        try {
-            cloud3.getOpenstack(); 
-            assertEquals(5,1);
-        } catch (Exception e)
-        {
-            assertEquals(3,2);
-        }
+        // try {
+        //     cloud3.getOpenstack(); 
+        //     assertEquals(5,1);
+        // } catch (Exception e)
+        // {
+        //     assertEquals(3,2);
+        // }
 
         // // Simulate the provisioning process used in NodeProvisioner (https://github.com/jenkinsci/jenkins/blob/master/core/src/main/java/hudson/slaves/NodeProvisioner.java#L628)
        
         clouds.add(cloud3); clouds.add(cloud4); 
         int jobsCount2 = 2; 
+        int count = 5;
         // // Until there are no more jobs to build
-        while(jobsCount2>0){
+        while(count > 0 && jobsCount2>0){
             // try provisioning from the clouds 
             for (JCloudsCloud c : clouds){
                 if (c.canProvision(generic)){
@@ -508,8 +509,9 @@ System.out.println(cloud.getOpenstack().instanceFingerprint());
                     jobsCount2 -=  c.provision(generic,jobsCount2).size();
                 }
             }  
+            count -= 1; 
         }
-             
+        count = 5; 
         assertEquals(0,jobsCount2);
          // Test 3 - third assertion 
         /* ○ Test 3: second Cloud down 
@@ -526,7 +528,7 @@ System.out.println(cloud.getOpenstack().instanceFingerprint());
         clouds.add(cloud5); clouds.add(cloud6); 
          int jobsCount3 = 2; 
         // // Until there are no more jobs to build
-        while(jobsCount3>0){
+        while(count > 0 && jobsCount3>0){
             // try provisioning from the clouds 
             for (JCloudsCloud c : clouds){
                 if (c.canProvision(generic)){
@@ -534,6 +536,7 @@ System.out.println(cloud.getOpenstack().instanceFingerprint());
                     jobsCount3 -= c.provision(generic,jobsCount3).size();
                 }
             }  
+            count -= 1; 
         }
              
         assertEquals(0,jobsCount3);  
