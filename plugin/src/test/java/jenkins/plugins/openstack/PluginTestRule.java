@@ -312,6 +312,7 @@ public final class PluginTestRule extends JenkinsRule {
 
     public JCloudsCloud unavailableDummyCloud(SlaveOptions opts, JCloudsSlaveTemplate... templates) {
         JCloudsCloud cloud = new MockJCloudsCloud(opts,false,templates);
+        
         jenkins.clouds.add(cloud);
         return cloud;
     }
@@ -654,7 +655,12 @@ public final class PluginTestRule extends JenkinsRule {
 
         @Override
         public @Nonnull Openstack getOpenstack() {
-            return os;
+            if ( getCredentialsId() != null){
+                return os ;
+            } else {
+                throw new LoginFailure(name);
+            }
+          
         }
 
         @Override
